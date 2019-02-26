@@ -16,6 +16,26 @@
   在划分数据集之前之后信息发生的变化称为信息增益，获得信息增益最高的特征就是最好的特征
   度量信息增益用香农熵（公式 书上35页）
 ```
-## 决策树伪代码
+## 决策树创建分支伪代码createBranch（）
 ```
+检测数据集中的每个子项是否属于同一类：
+  If so return 类标签
+  Else
+      寻找划分数据集的最好特征
+      划分数据集
+      创建分支节点
+        for 每个划分的子集
+          调用函数createBranch()并增加返回结果到分支节点中
+       return 分支节点
 ```
+## 代码解释
+> 本节所用的代码均在文件trees.py 和treePlotter.py 中，以下对函数进行说明
+- calcShannonEnt(dataSet) #计算给定数据集的香农熵   用了math中的log（）函数
+- createDataSet() #创建一个简单的数据集，用于测试
+
+- splitDataSet(dataSet,axis,value) 
+  #按照给定特征划分数据集，三个参数分别为待划分的数据集、划分数据集的特征、需要返回特征的值 
+  #将符合要求的值抽取出来   注意extend（）和append（）的区别
+- chooseBestFeatureToSplit(dataSet) #返回最好分类特征的索引
+- majorityCnt（classList）#处理叶子节点中类标签不唯一的情况
+- createTree(dataSet,labels) #递归创建树，使用字典类型存储树的信息
